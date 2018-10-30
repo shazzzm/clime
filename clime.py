@@ -21,7 +21,7 @@ def solve(X, l, verbose=False):
         constraints = [cvx.norm(S @ beta - e, "inf") <= l]
         prob = cvx.Problem(objective, constraints)
         result = prob.solve(solver=cvx.ECOS, verbose=verbose)
-        theta[i, :] = beta.value
+        theta[i, :] = beta.value.flatten()
 
     return _make_symmetric(theta)
 
@@ -72,10 +72,8 @@ def cross_validation(X, max_l=0.8, min_l=None, num_lambdas=25, num_splits = 6):
             theta = solve(X_train, l)
             S_test = np.cov(X_test, rowvar=False)
             likelihoods[i] = _log_likelihood(S_test, theta)
-        print(likelihoods)
         mean_likelihood[j] = np.mean(likelihoods)
 
-    print(mean_likelihood)
     min_err_lambda = np.argmin(mean_likelihood)
     return solve(X, lambdas[min_err_lambda]), lambdas[min_err_lambda]
 
