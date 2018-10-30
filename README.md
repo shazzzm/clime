@@ -1,4 +1,4 @@
-# # PyCLIME
+## PyCLIME
 
 An implementation of the CLIME algorithm proposes by Cai et al in "A Constrained L1 Minimization Approach to Sparse Precision Matrix Estimation" - https://amstat.tandfonline.com/doi/abs/10.1198/jasa.2011.tm10155
 This algorithm estimates a sparse precision matrix
