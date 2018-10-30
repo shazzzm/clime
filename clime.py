@@ -8,7 +8,6 @@ def solve(S, l):
     p = S.shape[0]
     theta = np.zeros((p, p))
     for i in range(p):
-        cov_row = S[i, :]
         beta = cvx.Variable(p)
         objective = cvx.Minimize(cvx.norm(beta, 1))
         e = np.zeros(p)
@@ -18,4 +17,26 @@ def solve(S, l):
         result = prob.solve()
         theta[i, :] = beta.value
 
-    return theta
+    return _make_symmetric(theta)
+
+def _make_symmetric(M):
+    """
+    Makes the matrix M symmetric
+    """
+    p = M.shape[0]
+
+    for i in range(p):
+        for j in range(p):
+            if i == j:
+                continue
+            x = M[i, j]
+            y = M[j, i]
+
+            if x < y:
+                M[i, j] = x
+                M[j, i] = x
+            else:
+                M[i, j] = y
+                M[j, i] = y
+
+    return M

@@ -3,7 +3,7 @@ from sklearn.datasets import make_sparse_spd_matrix
 import numpy as np
 import matplotlib.pyplot as plt
 
-p = 10
+p = 100
 l = 1
 prec = make_sparse_spd_matrix(p, 0.7)
 C = np.linalg.inv(prec)
